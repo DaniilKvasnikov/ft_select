@@ -20,18 +20,18 @@
 # define REVERSE_VIDEO_COLOR	"\033[7m"
 # define UNDERLINED				"\033[4m"
 
-# define ENTER_KEY				10
-# define ESC_KEY				27
-# define SPC_KEY				32
+# define ENTER_KEY				'\n'
+# define ESC_KEY				'\033'
+# define SPC_KEY				' '
 # define STAR_KEY				42
 # define MINUS_KEY				45
 # define O_KEY					111
 # define B_KEY					98
 # define BSP_KEY				127
-# define LEFT_KEY				4479771
-# define UP_KEY					4283163
-# define RIGHT_KEY				4414235
-# define DOWN_KEY				4348699
+# define LEFT_KEY				'D'
+# define UP_KEY					'A'
+# define RIGHT_KEY				'C'
+# define DOWN_KEY				'B'
 # define DEL_KEY				2117294875L
 
 static struct termios stored_settings;
