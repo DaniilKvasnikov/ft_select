@@ -20,7 +20,7 @@ SRCS_PATH = src/
 OBJ_PATH  = obj/
 LIBFT_PATH = libft/
 
-FLAGS = -Wall -Werror -Wextra
+FLAGS = #-Wall -Werror -Wextra
 INC = -I ./includes/ -I ./$(LIBFT_PATH)includes/
 
 SRCS_NAME = $(shell ls src | grep -E ".+\.c")
@@ -33,7 +33,7 @@ all: $(NAME)
 $(NAME): $(OBJ)
 	@make -C $(LIBFT_PATH)
 	@echo "\033[92m$(LIBFT_PATH)\033[0m compiled."
-	@gcc -lreadline $(FLAGS) $(OBJ) $(INC) -L $(LIBFT_PATH) -lft -o $(NAME)
+	@gcc -lreadline -lncurses -ltermcap $(FLAGS) $(OBJ) $(INC) -L $(LIBFT_PATH) -lft -o $(NAME)
 	@echo "\033[35m$(NAME)\033[0m created."
 
 $(OBJ_PATH)%.o: $(SRCS_PATH)%.c
