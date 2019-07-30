@@ -1,7 +1,7 @@
 # include "ft_select.h"
 
 void
-	print_list_select(t_mydata *mydata)
+	print_list_select(t_mydata *mydata, int fd)
 {
 	int	i;
 
@@ -12,9 +12,7 @@ void
 		if (i != 0)
 			ft_putchar_fd(' ', 0);
 		if (mydata->curr == i)
-		{
-			ft_putstr_fd(STYLE_REVERSE, 0);
-		}
+			ft_putstr_fd(STYLE_UNDERSCOPE, 0);
 		ft_putstr_fd(mydata->strs[i], 0);
 		ft_putstr_fd(C_RESET, 0);
 	}
@@ -115,7 +113,7 @@ int
 	tgetent(NULL, getenv("TERM"));
 	mydata = init_mydata(argc, argv);
 	set_keypress();
-	print_list_select(mydata);
+	print_list_select(mydata, 0);
 	while(get_strs_len(mydata->strs) != 0)
 	{
 		ret = read(STDERR_FILENO, &c, 8);
@@ -138,8 +136,9 @@ int
 				muve_curr(mydata, -1);
 		}
 		if (ret != 0)
-			print_list_select(mydata);
+			print_list_select(mydata, 0);
 	}
+	print_list_select(mydata, STDOUT_FILENO);
 	free_list_select(mydata->strs);
 	free(mydata->type);
 	free(mydata);
