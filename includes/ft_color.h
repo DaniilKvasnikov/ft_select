@@ -15,6 +15,12 @@
 # define C_BOLD_MAGNETA "\033[1;35m"
 # define C_CYAN "\033[0;36m"
 # define C_BOLD_CYAN "\033[1;36m"
+
+# define STYLE_BOLD "\033[1m"
+# define STYLE_BOLD2 "\033[2m"
+# define STYLE_UNDERSCOPE "\033[4m"
+# define STYLE_REVERSE "\033[7m"
+
 # define C_RESET "\033[0m"
 
 #endif

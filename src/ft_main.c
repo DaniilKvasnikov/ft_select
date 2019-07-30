@@ -12,7 +12,9 @@ void
 		if (i != 0)
 			ft_putchar_fd(' ', 0);
 		if (mydata->curr == i)
-			ft_putstr_fd(C_RED, 0);
+		{
+			ft_putstr_fd(STYLE_REVERSE, 0);
+		}
 		ft_putstr_fd(mydata->strs[i], 0);
 		ft_putstr_fd(C_RESET, 0);
 	}
@@ -34,13 +36,16 @@ char
 	**get_strs_argv(int argc, char **argv)
 {
 	int		i;
+	int		j;
 	char	**res;
 
 	res = (char **)malloc(sizeof(char *) * (argc));
 	i = 0;
+	j = -1;
 	while (++i < argc)
-		res[i - 1] = ft_strdup(argv[i]);
-	res[i - 1] = NULL;
+		if (ft_strlen(argv[i]) > 0)
+			res[++j] = ft_strdup(argv[i]);
+	res[++j] = NULL;
 	return (res);
 }
 
@@ -92,6 +97,10 @@ void
 	mydata->curr %= size;
 }
 
+void		sig_handler(int signo)
+{
+}
+
 int
 	main(int argc, char **argv)
 {
@@ -99,11 +108,15 @@ int
 	int			ret;
 	t_mydata	*mydata;
 
+	if (argc <= 1)
+		return (0);
+	// signal(SIGINT, sig_handler);
+	// signal(SIGTSTP, sig_handler);
 	tgetent(NULL, getenv("TERM"));
 	mydata = init_mydata(argc, argv);
 	set_keypress();
 	print_list_select(mydata);
-	while(42)
+	while(get_strs_len(mydata->strs) != 0)
 	{
 		ret = read(STDERR_FILENO, &c, 8);
 		if (ret == 1)
