@@ -3,7 +3,10 @@
 
 # include "ft_printf.h"
 # include "ft_color.h"
+# include "ft_structs.h"
+
 # include <term.h>
+# include <sys/ioctl.h>
 
 # define ENTER_KEY				'\n'
 # define ESC_KEY				'\033'
@@ -26,5 +29,6 @@ typedef struct			s_mydata
 }						t_mydata;
 
 void					set_keypress(void);
+t_point2				ft_get_size_win_console();
 
 #endif

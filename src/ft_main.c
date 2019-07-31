@@ -1,7 +1,52 @@
 # include "ft_select.h"
 
+int
+	get_max_size_select(t_mydata *mydata)
+{
+	int	max;
+	int	i;
+
+	max = ft_strlen(mydata->strs[0]);
+	i = -1;
+	while (mydata->strs[++i] != NULL)
+		if (ft_strlen(mydata->strs[i]) > max)
+			max = ft_strlen(mydata->strs[i]);
+	return (max);
+}
+
 void
 	print_list_select(t_mydata *mydata, int fd)
+{
+	int			i;
+	int			j;
+	t_point2	size;
+	int			max_size;
+
+	ft_putstr_fd(CL, 0);
+	size = ft_get_size_win_console();
+	max_size = get_max_size_select(mydata);
+	i = -1;
+	while (mydata->strs[++i] != NULL)
+	{
+		if (mydata->curr == i)
+			ft_putstr_fd(STYLE_UNDERSCOPE, 0);
+		if (mydata->active[i] == 1)
+			ft_putstr_fd(STYLE_BOLD, 0);
+		ft_putstr_fd(mydata->strs[i], 0);
+		ft_putstr_fd(C_RESET, 0);
+		j = 0;
+		while (j + ft_strlen(mydata->strs[i]) <= max_size)
+		{
+			ft_putchar_fd(' ', 0);
+			j++;
+		}
+		if (((i + 1) % (int)(size.y / (max_size + 1))) == 0)
+			ft_putchar_fd('\n', 0);
+	}
+}
+
+void
+	print_list_result(t_mydata *mydata, int fd)
 {
 	int	i;
 
@@ -9,12 +54,12 @@ void
 	i = -1;
 	while (mydata->strs[++i] != NULL)
 	{
-		if (i != 0)
-			ft_putchar_fd(' ', 0);
-		if (mydata->curr == i)
-			ft_putstr_fd(STYLE_UNDERSCOPE, 0);
-		ft_putstr_fd(mydata->strs[i], 0);
-		ft_putstr_fd(C_RESET, 0);
+		if (mydata->active[i] == 1)
+		{
+			if (i != 0)
+				ft_putchar_fd(' ', fd);
+			ft_putstr_fd(mydata->strs[i], fd);
+		}
 	}
 }
 
@@ -99,6 +144,12 @@ void		sig_handler(int signo)
 {
 }
 
+void
+	set_select(t_mydata *mydata)
+{
+	mydata->active[mydata->curr] = !mydata->active[mydata->curr];
+}
+
 int
 	main(int argc, char **argv)
 {
@@ -122,7 +173,7 @@ int
 			if (c[0] == ESC_KEY)
 				break ;
 			else if (c[0] == ENTER_KEY)
-				ft_putstr_fd("ENTER_KEY\n", 0);
+				set_select(mydata);
 		}
 		else if (ret == 3 && c[0] == '\033')
 		{
@@ -138,7 +189,7 @@ int
 		if (ret != 0)
 			print_list_select(mydata, 0);
 	}
-	print_list_select(mydata, STDOUT_FILENO);
+	print_list_result(mydata, STDOUT_FILENO);
 	free_list_select(mydata->strs);
 	free(mydata->type);
 	free(mydata);
