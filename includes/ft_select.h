@@ -10,6 +10,7 @@
 
 # define ENTER_KEY				'\n'
 # define ESC_KEY				'\033'
+# define SPC_KEY				' '
 # define LEFT_KEY				'D'
 # define UP_KEY					'A'
 # define RIGHT_KEY				'C'
@@ -31,8 +32,13 @@ typedef struct			s_mydata
 t_mydata				g_mydata;
 
 void					set_keypress(void);
-t_point2				ft_get_size_win_console();
 void					sig_handler(int signo);
 void					init_signals();
+
+t_point2				ft_get_size_win_console();
+int						get_max_size_select(void);
+int						get_strs_len(char **strs);
+
+void					print_list_select(void);
 
 #endif

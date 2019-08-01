@@ -15,52 +15,26 @@ int
 }
 
 void
-	print_list_select(void)
-{
-	int			i;
-	int			j;
-	t_point2	size;
-	int			max_size;
-
-	ft_putstr_fd(CL, 0);
-	size = ft_get_size_win_console();
-	max_size = get_max_size_select();
-	i = -1;
-	while (g_mydata.strs[++i] != NULL)
-	{
-		if (g_mydata.curr == i)
-			ft_putstr_fd(STYLE_UNDERSCOPE, 0);
-		if (g_mydata.active[i] == 1)
-			ft_putstr_fd(STYLE_BOLD, 0);
-		ft_putstr_fd(g_mydata.strs[i], 0);
-		ft_putstr_fd(C_RESET, 0);
-		j = 0;
-		while (j + ft_strlen(g_mydata.strs[i]) <= max_size)
-		{
-			ft_putchar_fd(' ', 0);
-			j++;
-		}
-		if (((i + 1) % (int)(size.y / (max_size + 1))) == 0)
-			ft_putchar_fd('\n', 0);
-	}
-}
-
-void
 	print_list_result(int fd)
 {
 	int	i;
+	int	j;
 
 	ft_putstr_fd(CL, 0);
 	i = -1;
+	j = 0;
 	while (g_mydata.strs[++i] != NULL)
 	{
 		if (g_mydata.active[i] == 1)
 		{
-			if (i != 0)
+			if (j != 0)
 				ft_putchar_fd(' ', fd);
 			ft_putstr_fd(g_mydata.strs[i], fd);
+			j++;
 		}
 	}
+	if (j != 0)
+		ft_putchar_fd('\n', fd);
 }
 
 void
@@ -211,22 +185,30 @@ int
 		{
 			if (c[0] == ESC_KEY)
 				break ;
-			else if (c[0] == ENTER_KEY)
+			else if (c[0] == SPC_KEY)
+			{
 				set_select();
+				muve_curr(1);
+			}
+			else
+				continue ;
 		}
 		else if (ret == 3 && c[0] == '\033')
 		{
-			if (c[2] == UP_KEY)
-				ft_putstr_fd("UP_KEY\n", 0);
-			else if (c[2] == DOWN_KEY)
-				ft_putstr_fd("DOWN_KEY\n", 0);
-			else if (c[2] == RIGHT_KEY)
+			// if (c[2] == UP_KEY)
+			// 	ft_putstr_fd("", 0);
+			// else if (c[2] == DOWN_KEY)
+			// 	ft_putstr_fd("", 0);
+			if (c[2] == RIGHT_KEY)
 				muve_curr(1);
 			else if (c[2] == LEFT_KEY)
 				muve_curr(-1);
+			else
+				continue ;
 		}
-		if (ret != 0)
-			print_list_select();
+		else
+			continue ;
+		print_list_select();
 	}
 	reset_default_conf();
 	print_list_result(STDOUT_FILENO);
