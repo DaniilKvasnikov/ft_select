@@ -2,22 +2,21 @@
 
 void set_keypress(void)
 {
-	struct termios new_settings;
+	tgetent(NULL, getenv("TERM"));
+	tcgetattr(0,&g_mydata.old_settings);
 
-	tcgetattr(0,&stored_settings);
+	g_mydata.new_settings = g_mydata.old_settings;
 
-	new_settings = stored_settings;
+	g_mydata.new_settings.c_lflag &= ~(ICANON | ECHO);
+	g_mydata.new_settings.c_cc[VTIME] = 0;
+	g_mydata.new_settings.c_cc[VMIN] = 1;
 
-	new_settings.c_lflag &= ~(ICANON | ECHO);
-	new_settings.c_cc[VTIME] = 0;
-	new_settings.c_cc[VMIN] = 1;
-
-	tcsetattr(0,TCSANOW,&new_settings);
+	tcsetattr(0,TCSANOW,&g_mydata.new_settings);
 	return;
 }
 
 void reset_keypress(void)
 {
-	tcsetattr(0,TCSANOW,&stored_settings);
+	tcsetattr(0,TCSANOW,&g_mydata.old_settings);
 	return;
 }

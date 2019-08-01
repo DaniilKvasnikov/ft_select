@@ -27,13 +27,19 @@ SRCS_NAME = $(shell ls src | grep -E ".+\.c")
 
 SRCS = $(addprefix $(SRCS_PATH), $(SRCS_NAME))
 OBJ = $(addprefix $(OBJ_PATH), $(SRCS_NAME:.c=.o))
-
+UNAME_S := $(shell uname -s)
+ifeq ($(UNAME_S),Linux)
+	DOP_FLAGS = -lreadline -ltinfo -lncurses -ltermcap
+endif
+ifeq ($(UNAME_S),Darwin)
+	DOP_FLAGS = -lreadline -lncurses -ltermcap
+endif
 all: $(NAME)
 
 $(NAME): $(OBJ)
 	@make -C $(LIBFT_PATH)
 	@echo "\033[92m$(LIBFT_PATH)\033[0m compiled."
-	@gcc -lreadline -lncurses -ltermcap $(FLAGS) $(OBJ) $(INC) -L $(LIBFT_PATH) -lft -o $(NAME)
+	@gcc $(FLAGS) $(OBJ) $(INC) -L $(LIBFT_PATH) -lft -o $(NAME) $(DOP_FLAGS)
 	@echo "\033[35m$(NAME)\033[0m created."
 
 $(OBJ_PATH)%.o: $(SRCS_PATH)%.c

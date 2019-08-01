@@ -17,8 +17,6 @@
 
 # define CL (tgetstr("cl", NULL))
 
-static struct termios	stored_settings;
-
 typedef struct			s_mydata
 {
 	char				**strs;
@@ -26,9 +24,15 @@ typedef struct			s_mydata
 	char				*type;
 	char				*active;
 	int					size;
+	struct termios		old_settings;
+	struct termios		new_settings;
 }						t_mydata;
+
+t_mydata				g_mydata;
 
 void					set_keypress(void);
 t_point2				ft_get_size_win_console();
+void					sig_handler(int signo);
+void					init_signals();
 
 #endif
