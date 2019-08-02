@@ -61,15 +61,21 @@ int
 }
 
 void
-	muve_curr(int dx)
+	muve_curr(int dx, t_point2 size_ter, int max_size)
 {
 	int	size;
+	int	cur_line;
 
 	size = get_strs_len(g_mydata.strs);
 	g_mydata.curr += dx;
 	if (g_mydata.curr < 0)
 		g_mydata.curr += size;
 	g_mydata.curr %= size;
+	cur_line = g_mydata.curr / (int)size_ter.x;
+	while (cur_line > (g_mydata.curr_line + size_ter.y / max_size - 1))
+		g_mydata.curr_line++;
+	if (cur_line < g_mydata.curr_line)
+		g_mydata.curr_line = cur_line;
 }
 
 void
@@ -188,7 +194,7 @@ int
 			else if (c[0] == SPC_KEY || c[0] == ENTER_KEY)
 			{
 				set_select();
-				muve_curr(1);
+				muve_curr(1, ft_get_size_win_console(), get_max_size_select());
 			}
 			else if (c[0] == BSP_KEY)
 			{
@@ -210,9 +216,9 @@ int
 		else if (ret == 3 && c[0] == '\033')
 		{
 			if (c[2] == RIGHT_KEY || c[2] == DOWN_KEY)
-				muve_curr(1);
+				muve_curr(1, ft_get_size_win_console(), get_max_size_select());
 			else if (c[2] == LEFT_KEY || c[2] == UP_KEY)
-				muve_curr(-1);
+				muve_curr(-1, ft_get_size_win_console(), get_max_size_select());
 			else
 				continue ;
 		}

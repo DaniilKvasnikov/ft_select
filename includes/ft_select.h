@@ -36,6 +36,7 @@ typedef struct			s_mydata
 {
 	char				**strs;
 	int					curr;
+	int					curr_line;
 	char				*type;
 	char				*active;
 	int					size;

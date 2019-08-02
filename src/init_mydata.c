@@ -56,5 +56,6 @@ void
 	g_mydata.curr = 0;
 	g_mydata.active = ft_strnew(g_mydata.size);
 	g_mydata.type = type_list_get(g_mydata.strs, g_mydata.size);
+	g_mydata.curr_line = 0;
 	ft_bzero(g_mydata.active, g_mydata.size);
 }

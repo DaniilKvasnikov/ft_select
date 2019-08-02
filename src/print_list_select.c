@@ -42,15 +42,15 @@ void
 	int			count;
 
 	count = get_strs_len(g_mydata.strs);
-	if (count > max_count_words(size, max_size + 1))
-		return ;
+	// if (count > max_count_words(size, max_size + 1))
+	// 	return ;
 	i = -1;
 	while (g_mydata.strs[++i] != NULL && i < size.x)
 	{
 		if (i != 0)
 			ft_putchar_fd('\n', 0);
-		j = 0;
-		while ((i + j * size.x) < count)
+		j = g_mydata.curr_line;
+		while ((i + j * size.x) < count && j < (g_mydata.curr_line + size.y / max_size - 1))
 		{
 			main_print(i + j * size.x, max_size);
 			j++;
