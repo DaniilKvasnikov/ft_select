@@ -49,23 +49,6 @@ void
 		free(strs);
 }
 
-char
-	**get_strs_argv(int argc, char **argv)
-{
-	int		i;
-	int		j;
-	char	**res;
-
-	res = (char **)malloc(sizeof(char *) * (argc));
-	i = 0;
-	j = -1;
-	while (++i < argc)
-		if (ft_strlen(argv[i]) > 0)
-			res[++j] = ft_strdup(argv[i]);
-	res[++j] = NULL;
-	return (res);
-}
-
 int
 	get_strs_len(char **strs)
 {
@@ -75,27 +58,6 @@ int
 	while (strs[++i] != NULL)
 		;
 	return (i);
-}
-
-char
-	*type_list_get(char **strs, int size)
-{
-	char	*res;
-
-	res = ft_strnew(size);
-	ft_bzero(res, size);
-	return (res);
-}
-
-void
-	init_mydata(int argc, char **argv)
-{
-	g_mydata.strs = get_strs_argv(argc, argv);
-	g_mydata.size = get_strs_len(g_mydata.strs);
-	g_mydata.type = type_list_get(g_mydata.strs, g_mydata.size);
-	g_mydata.curr = 0;
-	g_mydata.active = ft_strnew(g_mydata.size);
-	ft_bzero(g_mydata.active, g_mydata.size);
 }
 
 void

@@ -5,6 +5,8 @@
 # include "ft_color.h"
 # include "ft_structs.h"
 
+# include <sys/stat.h>
+# include <sys/types.h>
 # include <term.h>
 # include <sys/ioctl.h>
 
@@ -18,7 +20,17 @@
 # define DOWN_KEY				'B'
 # define STAR_KEY				'*'
 
+# define TYPE_DIR				1
+# define TYPE_LNK				2
+# define TYPE_BIN				3
+
+# define TYPE_DIR_COLOR			C_GREEN
+# define TYPE_LNK_COLOR			C_BLUE
+# define TYPE_BIN_COLOR			C_YELLOW
+
 # define CL (tgetstr("cl", NULL))
+
+typedef struct stat		t_stat;
 
 typedef struct			s_mydata
 {
@@ -43,6 +55,7 @@ int						get_strs_len(char **strs);
 
 void					print_list_select(void);
 
+void					init_mydata(int argc, char **argv);
 
 int						ft_delete_strs(void);
 

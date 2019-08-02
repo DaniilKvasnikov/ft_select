@@ -57,4 +57,10 @@ fclean: clean
 	
 re: fclean all
 
-.PHONY: all, clean, fclean, re
+r:
+	@/bin/rm -rf $(NAME)
+	@/bin/rm -rf $(OBJ_PATH)
+
+rl: r all
+
+.PHONY: all, clean, fclean, re, r, rl
