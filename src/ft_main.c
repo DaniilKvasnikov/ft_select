@@ -190,6 +190,11 @@ int
 				set_select();
 				muve_curr(1);
 			}
+			else if (c[0] == BSP_KEY)
+			{
+				if (ft_delete_strs() == 1)
+					break ;
+			}
 			else
 				continue ;
 		}

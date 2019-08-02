@@ -10,6 +10,7 @@
 
 # define ENTER_KEY				'\n'
 # define ESC_KEY				'\033'
+# define BSP_KEY				127
 # define SPC_KEY				' '
 # define LEFT_KEY				'D'
 # define UP_KEY					'A'
@@ -40,5 +41,8 @@ int						get_max_size_select(void);
 int						get_strs_len(char **strs);
 
 void					print_list_select(void);
+
+
+int						ft_delete_strs(void);
 
 #endif

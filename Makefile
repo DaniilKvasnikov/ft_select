@@ -39,12 +39,12 @@ all: $(NAME)
 $(NAME): $(OBJ)
 	@make -C $(LIBFT_PATH)
 	@echo "\033[92m$(LIBFT_PATH)\033[0m compiled."
-	@gcc $(FLAGS) $(OBJ) $(INC) -L $(LIBFT_PATH) -lft -o $(NAME) $(DOP_FLAGS)
+	@gcc -g $(FLAGS) $(OBJ) $(INC) -L $(LIBFT_PATH) -lft -o $(NAME) $(DOP_FLAGS)
 	@echo "\033[35m$(NAME)\033[0m created."
 
 $(OBJ_PATH)%.o: $(SRCS_PATH)%.c
 	@mkdir -p obj
-	@gcc -c $(FLAGS) $(INC) $< -o $@
+	@gcc -g -c $(FLAGS) $(INC) $< -o $@
 	@echo "\033[33m$<\033[0m compiled."
 	
 clean:
