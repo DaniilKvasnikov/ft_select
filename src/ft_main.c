@@ -135,24 +135,45 @@ void
 }
 
 int
-	select_char(char c)
+	get_first_char(char *str)
 {
 	int	i;
 
+	i = -1;
+	while (str[++i] != '\0')
+		;
+	while (--i >= 0)
+		if (str[i] == '/')
+			return (i + 1);
+	return (0);
+}
+
+int
+	select_char(char c)
+{
+	int	i;
+	int	j;
+
 	i = g_mydata.curr;
 	while (g_mydata.strs[++i] != NULL)
-		if (g_mydata.strs[i][0] == c)
+	{
+		j = get_first_char(g_mydata.strs[i]);
+		if (g_mydata.strs[i][j] == c)
 		{
 			g_mydata.curr = i;
 			return (1);
 		}
+	}
 	i = -1;
 	while (++i < g_mydata.curr)
-		if (g_mydata.strs[i][0] == c)
+	{
+		j = get_first_char(g_mydata.strs[i]);
+		if (g_mydata.strs[i][j] == c)
 		{
 			g_mydata.curr = i;
 			return (1);
 		}
+	}
 	return (0);
 }
 
@@ -200,6 +221,7 @@ int
 			{
 				if (ft_delete_strs() == 1)
 					break ;
+				muve_curr(0, ft_get_size_win_console(), get_max_size_select());
 			}
 			else if ((c[0] >= 'A' && c[0] <= 'Z') ||
 						(c[0] >= 'a' && c[0] <= 'z') ||
@@ -207,6 +229,7 @@ int
 			{
 				if (select_char(c[0]) == 0)
 					continue ;
+				muve_curr(0, ft_get_size_win_console(), get_max_size_select());
 			}
 			else if (c[0] == STAR_KEY)
 				select_all();
