@@ -16,6 +16,7 @@
 # define UP_KEY					'A'
 # define RIGHT_KEY				'C'
 # define DOWN_KEY				'B'
+# define STAR_KEY				'*'
 
 # define CL (tgetstr("cl", NULL))
 

@@ -167,6 +167,44 @@ void
 }
 
 int
+	select_char(char c)
+{
+	int	i;
+
+	i = g_mydata.curr;
+	while (g_mydata.strs[++i] != NULL)
+		if (g_mydata.strs[i][0] == c)
+		{
+			g_mydata.curr = i;
+			return (1);
+		}
+	i = -1;
+	while (++i < g_mydata.curr)
+		if (g_mydata.strs[i][0] == c)
+		{
+			g_mydata.curr = i;
+			return (1);
+		}
+	return (0);
+}
+
+void
+	select_all(void)
+{
+	int		b;
+	int		i;
+
+	i = -1;
+	b = 0;
+	while (g_mydata.strs[++i] != NULL)
+		if (g_mydata.active[i] == 0)
+			b = 1;
+	i = -1;
+	while (g_mydata.strs[++i] != NULL)
+		g_mydata.active[i] = b;
+}
+
+int
 	main(int argc, char **argv)
 {
 	char		c[8];
@@ -181,6 +219,10 @@ int
 	while(get_strs_len(g_mydata.strs) != 0)
 	{
 		ret = read(STDERR_FILENO, &c, 8);
+		// ft_putchar_fd(' ', 0);
+		// ft_putnbr_fd(ret, 0);
+		// ft_putchar_fd(' ', 0);
+		// ft_putnbr_fd(c[0], 0);
 		if (ret == 1)
 		{
 			if (c[0] == ESC_KEY)
@@ -195,6 +237,15 @@ int
 				if (ft_delete_strs() == 1)
 					break ;
 			}
+			else if ((c[0] >= 'A' && c[0] <= 'Z') ||
+						(c[0] >= 'a' && c[0] <= 'z') ||
+						(c[0] >= '0' && c[0] <= '9'))
+			{
+				if (select_char(c[0]) == 0)
+					continue ;
+			}
+			else if (c[0] == STAR_KEY)
+				select_all();
 			else
 				continue ;
 		}
