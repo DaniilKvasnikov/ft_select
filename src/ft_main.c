@@ -219,15 +219,11 @@ int
 	while(get_strs_len(g_mydata.strs) != 0)
 	{
 		ret = read(STDERR_FILENO, &c, 8);
-		// ft_putchar_fd(' ', 0);
-		// ft_putnbr_fd(ret, 0);
-		// ft_putchar_fd(' ', 0);
-		// ft_putnbr_fd(c[0], 0);
 		if (ret == 1)
 		{
 			if (c[0] == ESC_KEY)
 				break ;
-			else if (c[0] == SPC_KEY)
+			else if (c[0] == SPC_KEY || c[0] == ENTER_KEY)
 			{
 				set_select();
 				muve_curr(1);
@@ -251,13 +247,9 @@ int
 		}
 		else if (ret == 3 && c[0] == '\033')
 		{
-			// if (c[2] == UP_KEY)
-			// 	ft_putstr_fd("", 0);
-			// else if (c[2] == DOWN_KEY)
-			// 	ft_putstr_fd("", 0);
-			if (c[2] == RIGHT_KEY)
+			if (c[2] == RIGHT_KEY || c[2] == DOWN_KEY)
 				muve_curr(1);
-			else if (c[2] == LEFT_KEY)
+			else if (c[2] == LEFT_KEY || c[2] == UP_KEY)
 				muve_curr(-1);
 			else
 				continue ;

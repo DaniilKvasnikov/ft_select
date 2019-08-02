@@ -2,7 +2,11 @@
 
 void set_keypress(void)
 {
-	tgetent(NULL, getenv("TERM"));
+	if (tgetent(NULL, getenv("TERM")) == 0)
+	{
+		ft_putstr_fd("Error with TERM.\n", 2);
+		exit (1);
+	}
 	tcgetattr(0,&g_mydata.old_settings);
 
 	g_mydata.new_settings = g_mydata.old_settings;
