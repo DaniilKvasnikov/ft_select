@@ -1,6 +1,18 @@
-# include "ft_select.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init_mydata.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rrhaenys <rrhaenys@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/08/03 11:38:14 by rrhaenys          #+#    #+#             */
+/*   Updated: 2019/08/03 11:51:25 by rrhaenys         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-int
+#include "ft_select.h"
+
+static int
 	get_type(char *path)
 {
 	t_stat buff;
@@ -10,14 +22,14 @@ int
 		return (0);
 	if ((buff.st_mode & S_IFMT) == S_IFDIR)
 		return (TYPE_DIR);
-	if ((buff.st_mode & S_IFMT) == __S_IFLNK)
+	if ((buff.st_mode & S_IFMT) == S_IFLNK)
 		return (TYPE_LNK);
 	if (access(path, X_OK) == 0)
 		return (TYPE_BIN);
 	return (0);
 }
 
-char
+static char
 	*type_list_get(char **strs, int size)
 {
 	char	*res;
@@ -31,7 +43,7 @@ char
 	return (res);
 }
 
-char
+static char
 	**get_strs_argv(int argc, char **argv)
 {
 	int		i;

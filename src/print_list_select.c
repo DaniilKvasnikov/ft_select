@@ -1,6 +1,18 @@
-# include "ft_select.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   print_list_select.c                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rrhaenys <rrhaenys@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/08/03 11:34:58 by rrhaenys          #+#    #+#             */
+/*   Updated: 2019/08/03 11:52:14 by rrhaenys         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-void
+#include "ft_select.h"
+
+static void
 	main_print(int i, int max_size)
 {
 	int			j;
@@ -25,7 +37,7 @@ void
 	}
 }
 
-int
+static int
 	max_count_words(t_point2 size, int max_size)
 {
 	int		in_line;
@@ -34,7 +46,7 @@ int
 	return (size.x * in_line);
 }
 
-void
+static void
 	print_list_select_vertical(t_point2 size, int max_size)
 {
 	int			i;
@@ -42,15 +54,14 @@ void
 	int			count;
 
 	count = get_strs_len(g_mydata.strs);
-	// if (count > max_count_words(size, max_size + 1))
-	// 	return ;
 	i = -1;
 	while (g_mydata.strs[++i] != NULL && i < size.x)
 	{
 		if (i != 0)
 			ft_putchar_fd('\n', 0);
 		j = g_mydata.curr_line;
-		while ((i + j * size.x) < count && j < (g_mydata.curr_line + size.y / max_size - 1))
+		while ((i + j * size.x) < count &&
+				j < (g_mydata.curr_line + size.y / max_size - 1))
 		{
 			main_print(i + j * size.x, max_size);
 			j++;
@@ -64,6 +75,7 @@ void
 	t_point2	size;
 	int			max_size;
 
+	muve_curr(0, ft_get_size_win_console(), get_max_size_select());
 	ft_putstr_fd(CL, 0);
 	size = ft_get_size_win_console();
 	max_size = get_max_size_select();

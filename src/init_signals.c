@@ -1,22 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_get_size_win_console.c                          :+:      :+:    :+:   */
+/*   init_signals.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rrhaenys <rrhaenys@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/08/03 11:37:23 by rrhaenys          #+#    #+#             */
-/*   Updated: 2019/08/03 11:38:01 by rrhaenys         ###   ########.fr       */
+/*   Created: 2019/08/03 11:44:04 by rrhaenys          #+#    #+#             */
+/*   Updated: 2019/08/03 11:47:13 by rrhaenys         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_select.h"
 
-t_point2
-	ft_get_size_win_console(void)
+void
+	init_signals(void)
 {
-	struct winsize	ws;
-
-	ioctl(STDIN_FILENO, TIOCGWINSZ, &ws);
-	return ((t_point2){ws.ws_row, ws.ws_col});
+	signal(SIGSTOP, sig_handler);
+	signal(SIGINT, sig_handler);
+	signal(SIGWINCH, sig_handler);
+	signal(SIGABRT, sig_handler);
+	signal(SIGCONT, sig_handler);
+	signal(SIGKILL, sig_handler);
+	signal(SIGQUIT, sig_handler);
 }

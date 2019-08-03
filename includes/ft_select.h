@@ -24,9 +24,9 @@
 # define TYPE_LNK				2
 # define TYPE_BIN				3
 
-# define TYPE_DIR_COLOR			C_GREEN
-# define TYPE_LNK_COLOR			C_BLUE
-# define TYPE_BIN_COLOR			C_YELLOW
+# define TYPE_DIR_COLOR			C_BLUE
+# define TYPE_LNK_COLOR			C_MAGNETA
+# define TYPE_BIN_COLOR			C_RED
 
 # define CL (tgetstr("cl", NULL))
 
@@ -46,18 +46,25 @@ typedef struct			s_mydata
 
 t_mydata				g_mydata;
 
+void					init_mydata(int argc, char **argv);
 void					set_keypress(void);
 void					sig_handler(int signo);
-void					init_signals();
+void					init_signals(void);
+void					reset_default_conf(void);
 
-t_point2				ft_get_size_win_console();
+t_point2				ft_get_size_win_console(void);
 int						get_max_size_select(void);
 int						get_strs_len(char **strs);
 
 void					print_list_select(void);
+void					print_list_result(int fd);
 
-void					init_mydata(int argc, char **argv);
-
+void					free_args(void);
 int						ft_delete_strs(void);
+
+void					muve_curr(int dx, t_point2 size_ter, int max_size);
+void					set_select(void);
+void					select_all(void);
+int						select_char(char c);
 
 #endif

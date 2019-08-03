@@ -1,22 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_get_size_win_console.c                          :+:      :+:    :+:   */
+/*   muve_curr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rrhaenys <rrhaenys@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/08/03 11:37:23 by rrhaenys          #+#    #+#             */
-/*   Updated: 2019/08/03 11:38:01 by rrhaenys         ###   ########.fr       */
+/*   Created: 2019/08/03 11:43:31 by rrhaenys          #+#    #+#             */
+/*   Updated: 2019/08/03 11:47:16 by rrhaenys         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_select.h"
 
-t_point2
-	ft_get_size_win_console(void)
+void
+	muve_curr(int dx, t_point2 size_ter, int max_size)
 {
-	struct winsize	ws;
+	int	size;
+	int	cur_line;
 
-	ioctl(STDIN_FILENO, TIOCGWINSZ, &ws);
-	return ((t_point2){ws.ws_row, ws.ws_col});
+	size = get_strs_len(g_mydata.strs);
+	g_mydata.curr += dx;
+	if (g_mydata.curr < 0)
+		g_mydata.curr += size;
+	g_mydata.curr %= size;
+	cur_line = g_mydata.curr / (int)size_ter.x;
+	while (cur_line > (g_mydata.curr_line + size_ter.y / max_size - 1))
+		g_mydata.curr_line++;
+	if (cur_line < g_mydata.curr_line)
+		g_mydata.curr_line = cur_line;
 }
